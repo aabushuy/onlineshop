@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using OnlineShop.DataAccess;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("ApplicationContext")
+	?? throw new InvalidOperationException("Connection string 'ApplicationContext' not found.");
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+	options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
