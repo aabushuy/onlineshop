@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineShop.Domain.Entities
 {
-	public class Product : EntityBase
+	public class ProductDto
 	{
 	}
 }

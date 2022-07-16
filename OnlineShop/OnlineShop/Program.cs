@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OnlineShop;
 using OnlineShop.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ var connectionString = builder.Configuration.GetConnectionString("ApplicationCon
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 	options.UseSqlServer(connectionString));
+
+builder.Services.AddInfrastructure();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

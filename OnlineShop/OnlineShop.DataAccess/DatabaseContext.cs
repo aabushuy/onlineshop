@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineShop.DataAccess.Entities;
+using OnlineShop.Domain.DataAccess;
 
 namespace OnlineShop.DataAccess
 {
@@ -11,6 +11,16 @@ namespace OnlineShop.DataAccess
 
 		public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
 		{
+		}
+
+		public DatabaseContext(string connectionString) : base(GetOptions(connectionString))
+		{
+			Database.EnsureCreated();
+		}
+
+		private static DbContextOptions GetOptions(string connectionString)
+		{
+			return SqlServerDbContextOptionsExtensions.UseSqlServer(new DbContextOptionsBuilder(), connectionString).Options;
 		}
 	}
 }

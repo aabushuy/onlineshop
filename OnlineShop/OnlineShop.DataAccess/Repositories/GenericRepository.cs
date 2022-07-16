@@ -4,11 +4,11 @@ using System.Linq.Expressions;
 
 namespace OnlineShop.DataAccess.Repositories
 {
-	public abstract class RepositoryBase<T> : IGenericRepository<T> where T : class
+	public class GenericRepository<T> : IGenericRepository<T> where T : class
 	{
 		private readonly DbContext _databaseContext;
 
-		public RepositoryBase(DbContext databaseContext)
+		public GenericRepository(DatabaseContext databaseContext)
 		{
 			_databaseContext = databaseContext;
 		}

@@ -1,0 +1,19 @@
+﻿@using OnlineShop.Models
+@model IEnumerable<CategoryModel>
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <div class="text-left">
+    @foreach (var category in Model)
+        {
+            <div class="d-flex flex-row">
+              <div class="p-2">@category.Id</div>
+              <div class="p-2">@category.Name</div>
+              <div class="p-2">@category.ParentId</div>
+            </div>
+        }
+    </div>
+</div>
