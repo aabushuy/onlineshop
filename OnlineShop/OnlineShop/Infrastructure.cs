@@ -28,6 +28,7 @@ namespace OnlineShop
 		private static IServiceCollection AddServices(this IServiceCollection services)
 		{
 			services.AddScoped<ICategoryService, CategoryService>();
+			services.AddTransient<IBreadcrumbService, BreadcrumbService>();
 
 			return services;
 		}

@@ -1,0 +1,26 @@
+﻿@using OnlineShop.Models
+@{
+	Layout = "_Layout";
+	IEnumerable<BreadcrumbModel> Breadcrumbs =
+		ViewData["Breadcrumbs"] as IEnumerable<BreadcrumbModel> ?? new List<BreadcrumbModel>();
+}
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb	align-items-center">
+		@foreach (var breadcrumb in Breadcrumbs)
+		{
+			if (breadcrumb.IsActive)
+			{
+				 <li class="breadcrumb-item active" aria-current="page">@breadcrumb.Title</li>
+			}
+			else
+			{
+				<li class="breadcrumb-item">
+					<a href="#">@breadcrumb.Title</a>
+				</li>
+			}
+		}
+	</ol>
+</nav>
+
+@RenderBody()

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Domain.Interfaces.Services;
+using OnlineShop.Filters;
 using OnlineShop.Models;
 
 namespace OnlineShop.Controllers
@@ -19,6 +19,7 @@ namespace OnlineShop.Controllers
 			_mapper = mapper;
 		}
 
+		[BreadcrumbsFilter]
 		// GET: CategoryController
 		public async Task<ActionResult> Index()
 		{
@@ -29,9 +30,12 @@ namespace OnlineShop.Controllers
 			return View(categories);
 		}
 
+		[BreadcrumbsFilter]
 		// GET: CategoryController/Show/5
 		public async Task<ActionResult> Show(int id)
 		{
+			var requestedCategory = await _categoryService.GetAsync(id);
+
 			var categories = (await _categoryService.GetAllAsync())
 				.Where(c => c.Parent != null && c.Parent.Id == id)
 				.Select(c => _mapper.Map<CategoryModel>(c))
@@ -43,12 +47,6 @@ namespace OnlineShop.Controllers
 			}
 
 			return View("Index", categories);
-		}
-
-		// GET: CategoryController/Details/5
-		public ActionResult Details(int id)
-		{
-			return View();
 		}
 
 		// GET: CategoryController/Create

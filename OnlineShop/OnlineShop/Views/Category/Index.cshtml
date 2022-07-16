@@ -1,19 +1,28 @@
 ﻿@using OnlineShop.Models
 @model IEnumerable<CategoryModel>
 @{
-    ViewData["Title"] = "Categories";
+	ViewData["Title"] = ViewData["Title"] ?? "Categories";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@ViewData["Title"]</h1>
-    <div class="text-left">
-    @foreach (var category in Model)
-        {
-            <div class="d-flex flex-row">
-              <div class="p-2">@category.Id</div>
-              <div class="p-2">@category.Name</div>
-              <div class="p-2">@category.ParentId</div>
-            </div>
-        }
-    </div>
+<h1 class="display-4">@ViewData["Title"]</h1>
+
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<div class="row row-cols-1 row-cols-md-3 g-4">
+			@foreach (var category in Model)
+			{
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">@category.Name</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							@Html.ActionLink(category.Name, "Show", "Category", new { id = category.Id }, null)
+						</div>
+					</div>
+				</div>
+			}
+			</div>
+		</div>
+	</div>
 </div>
