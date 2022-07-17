@@ -24,7 +24,7 @@ namespace OnlineShop.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("OnlineShop.Domain.DataAccess.Category", b =>
+            modelBuilder.Entity("OnlineShop.Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace OnlineShop.DataAccess.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("OnlineShop.Domain.DataAccess.Product", b =>
+            modelBuilder.Entity("OnlineShop.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

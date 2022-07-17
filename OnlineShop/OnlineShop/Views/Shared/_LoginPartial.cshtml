@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using OnlineShop.Domain.Entities
+@using OnlineShop.Domain.Interfaces.Services
+
+@inject SignInManager<SiteUser> SignInManager
+@inject UserManager<SiteUser> UserManager
+@inject ISiteUserService SiteUserService
+
+<ul class="navbar-nav" id="navbarNavDarkDropdown">
+	@if (SignInManager.IsSignedIn(User))
+	{
+		var user = await SiteUserService.GetCurrentUserAsync(User);
+		if(user == null)
+		{
+			await SignInManager.SignOutAsync();
+			return;
+		}
+
+		<li class="nav-item dropdown p-1">
+			<a class="btn btn-outline-secondary dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				@user.NormalizedUserName</a>
+			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+				@if (user.Role == SiteRole.Admin)
+				{
+					<li><a class="dropdown-item" asp-area="Admin" asp-page="/Index">Admin</a></li>
+				}
+				<li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a></li>
+				<li>
+					<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+						<button id="logout" type="submit" class="dropdown-item">Logout</button>
+					</form>
+				</li>
+			</ul>
+		</li>
+	}
+	else
+	{
+		<li class="nav-item p-1">
+			<a class="btn btn-outline-secondary" role="button" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+		</li>
+		<li class="nav-item p-1">
+			<a class="btn btn-outline-secondary" role="button" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+		</li>
+	}		
+</ul>

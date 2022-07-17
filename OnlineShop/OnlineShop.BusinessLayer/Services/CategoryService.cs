@@ -2,11 +2,6 @@
 using OnlineShop.Domain.Entities;
 using OnlineShop.Domain.Interfaces.Repositories;
 using OnlineShop.Domain.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineShop.BusinessLayer.Services
 {
@@ -21,43 +16,35 @@ namespace OnlineShop.BusinessLayer.Services
 			_categoryRepository = categoryRepository;
 		}
 
-		public async Task<IList<CategoryDto>> GetAllAsync()
+		public async Task<IList<Category>> GetAllAsync()
 		{
-			var categories = new List<CategoryDto>();
-			foreach (var category in await _categoryRepository.GetAllAsync())
+			return await _categoryRepository.GetAllAsync();
+		}
+
+		public async Task<Category?> GetAsync(int id)
+		{
+			return await _categoryRepository.GetAsync(c => c.Id == id);
+		}
+
+		public async Task<Category> AddAsync(Category category)
+		{
+			var isUniq = !(await _categoryRepository.GetAllAsync()).Any(c => c.Name == category.Name);
+			if (!isUniq) 
 			{
-				var categoryDto = _mapper.Map<CategoryDto>(category);
-				categories.Add(categoryDto);
+				throw new InvalidOperationException($"The {category.Name} already exists");
 			}
 
-			return categories;
+			return await _categoryRepository.CreateAsync(category);
 		}
 
-		public async Task<CategoryDto?> GetAsync(int id)
+		public async Task<Category> UpdateAsync(Category category)
 		{
-			var category = await _categoryRepository.GetAsync(c => c.Id == id);
-			var categoryDto = _mapper.Map<CategoryDto>(category);
-
-			categoryDto.Parent = category.ParentId.HasValue
-				? _mapper.Map<CategoryDto>(await GetAsync(category.ParentId.Value))
-				: null;
-
-			return categoryDto;
+			return await _categoryRepository.UpdateAsync(category);
 		}
 
-		public Task<CategoryDto> AddAsync(CategoryDto category)
+		public async Task DeleteAsync(Category category)
 		{
-			throw new NotImplementedException();
-		}
-
-		public Task<CategoryDto> UpdateAsync(CategoryDto category)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task DeleteAsync(CategoryDto category)
-		{
-			throw new NotImplementedException();
+			await _categoryRepository.DeleteAsync(category);
 		}
 	}
 }

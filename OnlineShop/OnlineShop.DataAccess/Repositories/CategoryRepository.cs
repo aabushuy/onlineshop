@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineShop.Domain.DataAccess;
+using OnlineShop.Domain.Entities;
 using OnlineShop.Domain.Interfaces.Repositories;
 
 namespace OnlineShop.DataAccess.Repositories

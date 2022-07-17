@@ -8,7 +8,14 @@ namespace OnlineShop.Profiles
 	{
 		public CategoryModelProfile()
 		{
-			CreateMap<CategoryDto, CategoryModel>();
+			CreateMap<Category, CatalogItemModel>()
+				.ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.ParentId ?? -1));
+
+			CreateMap<Category, CatalogItemModel>()
+				.ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.ParentId ?? -1));
+
+			CreateMap<CatalogItemModel, Category>()
+				.ForMember(dest => dest.ParentId, opt => opt.MapFrom(src => src.CategoryId));
 		}
 	}
 }

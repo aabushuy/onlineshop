@@ -1,4 +1,4 @@
-﻿using OnlineShop.Domain.DataAccess;
+﻿using OnlineShop.Domain.Entities;
 
 namespace OnlineShop.Domain.Interfaces.Repositories
 {

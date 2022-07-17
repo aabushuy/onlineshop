@@ -11,7 +11,6 @@ namespace OnlineShop
 		{
 			services.AddRepositories();
 			services.AddServices();
-			services.AddBuilders();
 			services.AddMapper();
 
 			return services;
@@ -21,6 +20,11 @@ namespace OnlineShop
 		{
 			services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 			services.AddScoped(typeof(ICategoryRepository), typeof(CategoryRepository));
+			services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+			services.AddScoped(typeof(IManufacturerRepository), typeof(ManufacturerRepository));
+			services.AddScoped(typeof(IProductStockRepository), typeof(ProductStockRepository));
+
+			services.AddScoped(typeof(ISiteUserRepository), typeof(SiteUserRepository));
 
 			return services;
 		}
@@ -28,22 +32,21 @@ namespace OnlineShop
 		private static IServiceCollection AddServices(this IServiceCollection services)
 		{
 			services.AddScoped<ICategoryService, CategoryService>();
+			services.AddScoped<IProductService, ProductService>();
+			services.AddScoped<IManufacturerService, ManufacturerService>();
+			services.AddScoped<IProductStockService, ProductStockService>();
+
 			services.AddTransient<IBreadcrumbService, BreadcrumbService>();
+			services.AddTransient<ISiteUserService, SiteUserService>();
 
-			return services;
-		}
-
-		private static IServiceCollection AddBuilders(this IServiceCollection services)
-		{
-			
 			return services;
 		}
 
 		private static IServiceCollection AddMapper(this IServiceCollection services)
 		{
 			services.AddAutoMapper(
-				typeof(BusinessLayer.Profiles.CategoryProfile),
-				typeof(Profiles.CategoryModelProfile));
+				typeof(Profiles.CategoryModelProfile),
+				typeof(Profiles.ProductModelProfile));
 
 			return services;
 		}

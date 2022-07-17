@@ -1,0 +1,43 @@
+﻿@using OnlineShop.Domain.Interfaces.Services
+@using OnlineShop.Models
+
+@inject ISiteUserService SiteUserService
+
+@model CatalogModel
+@{
+	ViewData["Title"] = ViewData["Title"] ?? Model.CatalogName;
+	var user =  await SiteUserService.GetCurrentUserAsync(User);
+	var IsAdmin = user != null && user.Role == OnlineShop.Domain.Entities.SiteRole.Admin;
+}
+
+<h1 class="display-4">@ViewData["Title"]</h1>
+
+<div class="container">
+	@if (IsAdmin)
+	{
+		<div class="pb-2"><a href="@Url.Action("Create", Model.CatalogName)" class="btn btn-primary" role="button">Add new @Model.CatalogName</a></div>
+	}
+	<div class="row">
+		<div class="col-12">
+			<div class="row row-cols-1 row-cols-md-3 g-4">
+			@foreach (var catalogItem in Model.Items)
+			{
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">@catalogItem.Name</h5>
+							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+							@Html.ActionLink("Show", "Show", Model.CatalogName, new { id = catalogItem.Id }, null)
+							@if (IsAdmin)
+							{
+								<div>@Html.ActionLink("Edit", "Edit", Model.CatalogName, new { id = catalogItem.Id }, null)</div>
+								<div>@Html.ActionLink("Delete", "Delete", Model.CatalogName, new { id = catalogItem.Id }, null)</div>
+							}
+						</div>
+					</div>
+				</div>
+			}
+			</div>
+		</div>
+	</div>
+</div>

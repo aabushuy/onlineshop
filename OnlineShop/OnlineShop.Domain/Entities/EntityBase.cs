@@ -1,4 +1,4 @@
-﻿namespace OnlineShop.Domain.DataAccess
+﻿namespace OnlineShop.Domain.Entities
 {
 	public class EntityBase
 	{

@@ -1,8 +1,14 @@
-﻿@{
+﻿@using OnlineShop.Domain.Interfaces.Services
+@using OnlineShop.Models
+
+@inject ISiteUserService SiteUserService
+@{
     ViewData["Title"] = "Home Page";
+    var user =  await SiteUserService.GetCurrentUserAsync(User);
+	var greetingMessage = $"Welcome" + (user != null ? $", {user.UserName}!" : string.Empty);
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">@greetingMessage</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

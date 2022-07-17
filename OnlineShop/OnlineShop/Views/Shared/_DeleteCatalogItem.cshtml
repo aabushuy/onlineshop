@@ -1,0 +1,21 @@
+﻿@model CatalogItemModel
+@{
+}
+<div class="row">
+	<div class="col-md-6">
+		<section>
+			<form id="deleteForm" method="post">
+				<h2><div class="text-danger">Are you sure you want to delete that?</div></h2>
+				<div asp-validation-summary="All" class="text-danger"></div>
+				<div class="form-floating">
+					<input asp-for="Name" class="form-control" autocomplete="name" aria-required="true" disabled/>
+					<label asp-for="Name" class="form-label"></label>
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+				<div>
+					<button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Delete</button>
+				</div>
+			</form>
+		</section>
+	</div>
+</div>
